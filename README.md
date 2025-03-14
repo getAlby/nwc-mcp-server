@@ -28,18 +28,18 @@ Add this to your claude_desktop_config.json:
 
 > Copy the below and paste it into a cline prompt. It should prompt you to update the connection string.
 
-Add the following to my MCP servers list
-
 ```json
-  "nwc": {
-      "command": "npx",
-      "args": ["-y", "@getalby/nwc-mcp-server"],
-      "env": {
-        "NWC_CONNECTION_STRING": "nostr+walletconnect://..."
-      },
-      "disabled": false,
-      "autoApprove": []
-    }
+Add the following to my MCP servers list:
+
+"nwc": {
+  "command": "npx",
+  "args": ["-y", "@getalby/nwc-mcp-server"],
+  "env": {
+    "NWC_CONNECTION_STRING": "nostr+walletconnect://..."
+  },
+  "disabled": false,
+  "autoApprove": []
+}
 ```
 
 ## From Source
