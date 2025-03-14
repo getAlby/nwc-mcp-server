@@ -11,6 +11,7 @@ import { registerMakeInvoiceTool } from "./tools/make_invoice.js";
 import { registerPayInvoiceTool } from "./tools/pay_invoice.js";
 import { registerGetBalanceTool } from "./tools/get_balance.js";
 import { registerGetWalletServiceInfoTool } from "./tools/get_wallet_service_info.js";
+import { registerLookupInvoiceTool } from "./tools/lookup_invoice.js";
 
 // Load environment variables from .env file
 dotenv.config();
@@ -52,6 +53,7 @@ class NWCServer {
     registerMakeInvoiceTool(this._server, this._client);
     registerPayInvoiceTool(this._server, this._client);
     registerGetBalanceTool(this._server, this._client);
+    registerLookupInvoiceTool(this._server, this._client);
   }
 
   async run() {
