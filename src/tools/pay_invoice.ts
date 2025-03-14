@@ -22,11 +22,7 @@ export function registerPayInvoiceTool(
         .optional(),
     },
     async (params) => {
-      const result = await client.payInvoice({
-        invoice: params.invoice,
-        amount: params.amount,
-        metadata: params.metadata,
-      });
+      const result = await client.payInvoice(params);
       return {
         content: [
           {
