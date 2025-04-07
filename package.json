@@ -2,7 +2,7 @@
   "name": "@getalby/nwc-mcp-server",
   "description": "MCP server for controlling a Lightning wallet using Nostr Wallet Connect",
   "repository": "https://github.com/getAlby/nwc-mcp-server.git",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "main": "build/index.js",
   "bin": {
@@ -12,6 +12,7 @@
     "build/**/*"
   ],
   "scripts": {
+    "prepack": "yarn build",
     "build": "tsc && chmod 755 build/index.js",
     "start": "node build/index.js",
     "inspect": "npx @modelcontextprotocol/inspector node build/index.js"
