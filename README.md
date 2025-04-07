@@ -24,6 +24,18 @@ Add this to your claude_desktop_config.json:
 }
 ```
 
+### Add to Goose
+
+1. Type `goose configure`
+2. Add extension -> Command Line Extension
+3. Call it `nwc`
+4. What command should be run: `npx -y @getalby/nwc-mcp-server`
+5. Timeout: 30
+6. Description: no
+7. environment variables: yes
+8. environment variable name: `NWC_CONNECTION_STRING`
+9. environment variable value: `nostr+walletconnect://...` (your NWC connection secret here)
+
 ### Add to Cline
 
 > Copy the below and paste it into a cline prompt. It should prompt you to update the connection string.
