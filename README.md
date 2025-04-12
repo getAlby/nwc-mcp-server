@@ -54,6 +54,26 @@ Add the following to my MCP servers list:
 }
 ```
 
+### Add to N8N (Community Node)
+
+Currently this MCP server only works via command line (STDIO).
+
+You can install the [n8n-nodes-mcp](https://github.com/nerding-io/n8n-nodes-mcp) community node and run n8n with tools enabled e.g.
+
+```bash
+N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE=true npx n8n
+```
+
+Create a blank workflow and add an AI agent node. Configure your LLM model and add a new tool "MCP Client" (which will have a cube next to it showing it's a community node).
+
+Configure the MCP Client by adding a credential with Command Line (STDIO) selected.
+
+command: `npx`
+arguments: `-y @getalby/nwc-mcp-server`
+environments `NWC_CONNECTION_STRING=nostr+walletconnect://your_key_here` (create the whole line in a text editor and paste it in, since the password field cannot be switched to plaintext)
+
+See the [N8N paid chat workflow](examples/n8n-paid-chat) for a full example
+
 ## From Source
 
 ### Prerequisites
