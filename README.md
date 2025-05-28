@@ -6,6 +6,15 @@ This MCP server uses the [official MCP TypeScript SDK](https://github.com/modelc
 
 ## Quick Start
 
+### Use the Alby-Hosted MCP Server
+
+If your agent supports SSE (e.g. N8N) or HTTP Streamable transports, you can connect to Alby's MCP server.
+
+- SSE: `https://nwc-mcp.albylabs.com/sse`
+- HTTP Streamable: `https://nwc-mcp.albylabs.com/mcp`
+
+Both require providing an NWC connection secret as `Bearer` authentication.
+
 ### Add to Claude Desktop
 
 Add this to your claude_desktop_config.json:
