@@ -14,15 +14,19 @@ export function registerPayInvoiceTool(
       amount: z
         .number()
         .describe("Optional amount in millisats to pay a zero-amount invoice")
-        .optional(),
+        .nullish(),
       metadata: z
         .object({})
         .passthrough()
         .describe("Optional metadata to include with the payment")
-        .optional(),
+        .nullish(),
     },
     async (params) => {
-      const result = await client.payInvoice(params);
+      const result = await client.payInvoice({
+        invoice: params.invoice,
+        amount: params.amount || undefined,
+        metadata: params.metadata || undefined,
+      });
       return {
         content: [
           {

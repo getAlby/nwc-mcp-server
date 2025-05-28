@@ -13,11 +13,14 @@ export function registerLookupInvoiceTool(
       payment_hash: z
         .string()
         .describe("The payment hash of the invoice to look up")
-        .optional(),
-      invoice: z.string().describe("The BOLT 11 invoice to look up").optional(),
+        .nullish(),
+      invoice: z.string().describe("The BOLT 11 invoice to look up").nullish(),
     },
     async (params) => {
-      const result = await client.lookupInvoice(params);
+      const result = await client.lookupInvoice({
+        invoice: params.invoice || undefined,
+        payment_hash: params.payment_hash || undefined,
+      });
       return {
         content: [
           {
