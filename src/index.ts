@@ -5,40 +5,32 @@ import { ErrorCode, McpError } from "@modelcontextprotocol/sdk/types.js";
 import { nwc } from "@getalby/sdk";
 
 import dotenv from "dotenv";
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
-import { registerGetInfoTool } from "./tools/get_info.js";
-import { registerMakeInvoiceTool } from "./tools/make_invoice.js";
-import { registerPayInvoiceTool } from "./tools/pay_invoice.js";
-import { registerGetBalanceTool } from "./tools/get_balance.js";
-import { registerGetWalletServiceInfoTool } from "./tools/get_wallet_service_info.js";
-import { registerLookupInvoiceTool } from "./tools/lookup_invoice.js";
+import express from "express";
+import { createMCPServer } from "./mcp_server.js";
+import { addSSEEndpoints } from "./sse.js";
+import { addStreamableHttpEndpoints } from "./streamable_http.js";
 
 // Load environment variables from .env file
 dotenv.config();
 
-// NWC connection string should be provided as an environment variable
-const NWC_CONNECTION_STRING = process.env.NWC_CONNECTION_STRING;
-if (!NWC_CONNECTION_STRING) {
-  throw new Error("NWC_CONNECTION_STRING environment variable is required");
-}
-
 class NWCServer {
-  private _server: McpServer;
-  private _client: nwc.NWCClient;
-
-  constructor() {
-    this._server = new McpServer(
-      {
-        name: "nwc-mcp-server",
-        version: "1.0.0",
-      },
-      {}
-    );
-
+  async runSTDIO() {
     try {
-      this._client = new nwc.NWCClient({
+      // NWC connection string should be provided as an environment variable
+      const NWC_CONNECTION_STRING = process.env.NWC_CONNECTION_STRING;
+      if (!NWC_CONNECTION_STRING) {
+        throw new Error(
+          "NWC_CONNECTION_STRING environment variable is required"
+        );
+      }
+
+      const client = new nwc.NWCClient({
         nostrWalletConnectUrl: NWC_CONNECTION_STRING,
       });
+      const transport = new StdioServerTransport();
+      const server = createMCPServer(client);
+      await server.connect(transport);
+      console.log("Server running in STDIO mode");
     } catch (error) {
       throw new McpError(
         ErrorCode.InternalError,
@@ -47,19 +39,26 @@ class NWCServer {
         }`
       );
     }
-
-    registerGetWalletServiceInfoTool(this._server, this._client);
-    registerGetInfoTool(this._server, this._client);
-    registerMakeInvoiceTool(this._server, this._client);
-    registerPayInvoiceTool(this._server, this._client);
-    registerGetBalanceTool(this._server, this._client);
-    registerLookupInvoiceTool(this._server, this._client);
   }
+  async runHTTP() {
+    const app = express();
 
-  async run() {
-    const transport = new StdioServerTransport();
-    await this._server.connect(transport);
+    addSSEEndpoints(app);
+    addStreamableHttpEndpoints(app);
+
+    const port = parseInt(process.env.PORT || "3000");
+    app.listen(port);
+    console.log("Server running in HTTP mode on port", port);
   }
 }
 
-new NWCServer().run().catch(console.error);
+switch (process.env.MODE || "STDIO") {
+  case "HTTP":
+    new NWCServer().runHTTP().catch(console.error);
+    break;
+  case "STDIO":
+    new NWCServer().runSTDIO().catch(console.error);
+    break;
+  default:
+    console.error("Unknown transport: " + process.env.MCP_TRANSPORT);
+}

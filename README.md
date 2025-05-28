@@ -54,7 +54,15 @@ Add the following to my MCP servers list:
 }
 ```
 
-### Add to N8N (Community Node)
+### Add to N8N via SSE
+
+You can use the native N8N MCP Client tool connected to an AI agent. Enter your SSE endpoint, set authentication to "Bearer" and paste your NWC connection secret.
+
+Tested with OpenRouter + anthropic/claude-3.7-sonnet
+
+See the [N8N workflow](examples/n8n-sse) for a simple example
+
+### Add to N8N via STDIO (Community Node)
 
 Currently this MCP server only works via command line (STDIO).
 
@@ -72,7 +80,19 @@ command: `npx`
 arguments: `-y @getalby/nwc-mcp-server`
 environments `NWC_CONNECTION_STRING=nostr+walletconnect://your_key_here` (create the whole line in a text editor and paste it in, since the password field cannot be switched to plaintext)
 
-See the [N8N paid chat workflow](examples/n8n-paid-chat) for a full example
+See the [N8N paid chat workflow](examples/n8n-paid-chat-stdio) for a full example
+
+## Modes
+
+### STDIO
+
+By default NWC MCP Server runs locally in `STDIO` mode.
+
+### HTTP
+
+You can set the following environment variable: `MODE=HTTP` which will enable Streamable HTTP (`http://localhost:3000/mcp`) and SSE (`http://localhost:3000/sse` Note: SSE is deprecated).
+
+HTTP requires bearer authorization, where the token is a wallet's NWC connection secret.
 
 ## From Source
 
