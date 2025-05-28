@@ -10,8 +10,8 @@ This MCP server uses the [official MCP TypeScript SDK](https://github.com/modelc
 
 If your agent supports SSE (e.g. N8N) or HTTP Streamable transports, you can connect to Alby's MCP server.
 
-- SSE: `https://nwc-mcp.albylabs.com/sse`
-- HTTP Streamable: `https://nwc-mcp.albylabs.com/mcp`
+- SSE: `https://mcp.getalby.com/sse`
+- HTTP Streamable: `https://mcp.getalby.com/mcp`
 
 Both require providing an NWC connection secret as `Bearer` authentication.
 
