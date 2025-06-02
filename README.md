@@ -4,6 +4,8 @@ Connect a bitcoin lightning wallet to your LLM using Nostr Wallet Connect ([NWC]
 
 This MCP server uses the [official MCP TypeScript SDK](https://github.com/modelcontextprotocol/typescript-sdk)
 
+> See also the [Alby MCP server](https://github.com/getAlby/mcp) which includes additional useful tools.
+
 ## Quick Start
 
 ### Use the Alby-Hosted MCP Server
