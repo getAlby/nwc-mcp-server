@@ -1,3 +1,9 @@
+# ⚠️ DEPRECATED ⚠️
+
+**Please use [Alby MCP](https://github.com/getAlby/mcp/) instead!** 
+
+This repository has been deprecated in favor of Alby MCP, which includes all the NWC tools along with additional Lightning tools.
+
 # NWC MCP Server
 
 Connect a bitcoin lightning wallet to your LLM using Nostr Wallet Connect ([NWC](https://nwc.dev/) or [NIP-47](https://github.com/nostr-protocol/nips/blob/master/47.md)).
